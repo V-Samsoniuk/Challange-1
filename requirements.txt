@@ -1,0 +1,6 @@
+pip
+helium
+pytest
+selenium
+webdriver-manager
+waiting
