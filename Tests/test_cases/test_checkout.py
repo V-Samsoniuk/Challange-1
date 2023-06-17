@@ -3,6 +3,7 @@ from helper_methods import start_chrome
 
 ###Setup
 product = "Skittles"
+
 driver = start_chrome(headless=False)
 driver.get("https://www.amazon.de")
 cookies = driver.find_element_by_id("sp-cc-accept")
@@ -16,7 +17,8 @@ price = '//*[contains(@class,"priceToPay")]//span[contains(@class, "a-offscreen"
 add_to_basket = '//*[@id="add-to-cart-button"]'
 basket = '//*[@id="nav-cart"]'
 checkout = '//*[@id="sc-buy-box-ptc-button"]'
-price = '//*[contains(@id,"sc-active")]/div[4]/div/div[2]/ul/div/p[1]/span'
+price = '//span[contains(@class,"sc-product-price")]'
+total = '//*[@id="sc-subtotal-amount-activecart"]'
 
 def element(locator):
     return driver.find_element_by_xpath(locator)
@@ -39,7 +41,16 @@ def test__add_product_to_cart(
         assert '/cart' in driver.current_url
     return driver
 ###Go to basket
+test__add_product_to_cart(driver, ("Skittles", "M&M'S"))
+element(basket).click()
+p1 = elements(price)[1].text[:-1]
+p2 = elements(price)[0].text[:-1]
+t = elements(total)[0].text[:-1]
 
-basket.click()
-checkout.click()
-
+p1 = p1.replace(",",".")
+p2 = p2.replace(",",".")
+t = t.replace(",",".")
+sum = float(p1) + float(p2)
+assert float (t )== sum
+element(checkout).click()
+assert '/signin' in driver.current_url
