@@ -1,3 +1,4 @@
+import pytest
 from selenium.webdriver.common.keys import Keys
 from helper_methods import start_chrome
 from selenium.webdriver.chrome.webdriver import WebDriver
@@ -19,6 +20,10 @@ def element(locator):
 
 def elements(locator):
     return WebDriver.find_elements_by_xpath(locator)
+
+@pytest.fixture
+def products():
+    return ("Skittles", "M&M'S")
 
 
 def test__add_product_to_cart(
