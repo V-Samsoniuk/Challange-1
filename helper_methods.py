@@ -1,6 +1,7 @@
 from typing import Optional
 from selenium.webdriver.chrome.webdriver import WebDriver
 
+
 def start_chrome(
     headless: bool = False,
     webapp_testing: Optional[bool] = True
